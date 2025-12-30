@@ -4,16 +4,39 @@
  * Write a recursive function that counts how many nodes in a binary tree
  * have a value greater than the given threshold.
  */
-function countNodesAbove(root, threshold) {}
 
+let count = 0;
+function countNodesAbove(root, threshold) {
+  
+  if (root === undefined) return;
+
+  if (root.value <= threshold) {
+    if (root.right) {
+      countNodesAbove(root.right, threshold);
+    }
+  }
+
+  if (root.value > threshold) {
+    count++;
+
+    if (root.left) {
+      countNodesAbove(root.left, threshold);
+    }
+    if (root.right) {
+      countNodesAbove(root.right, threshold);
+    }
+  } 
+ 
+  return count;
+}
 
 // Test tree structure:
-// const tree = {
-//   value: 10,
-//   left: { value: 5, left: { value: 3 }, right: { value: 7 } },
-//   right: { value: 15, left: { value: 12 }, right: { value: 18 } },
-// };
-// console.log(countNodesAbove(tree, 10)); // -> 3 (10, 15, 12, 18)
+const tree = {
+  value: 10,
+  left: { value: 5, left: { value: 3 }, right: { value: 7 } },
+  right: { value: 15, left: { value: 12 }, right: { value: 18 } },
+};
+console.log(countNodesAbove(tree, 10)); // -> 3 (10, 15, 12, 18)
 
 /**
  * Challenge 2: The Directory Size Calculator

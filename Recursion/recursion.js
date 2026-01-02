@@ -36,7 +36,7 @@ const tree = {
   left: { value: 5, left: { value: 3 }, right: { value: 7 } },
   right: { value: 15, left: { value: 12 }, right: { value: 18 } },
 };
-console.log(countNodesAbove(tree, 10)); // -> 3 (10, 15, 12, 18)
+// console.log(countNodesAbove(tree, 10)); // -> 3 (10, 15, 12, 18)
 
 /**
  * Challenge 2: The Directory Size Calculator
@@ -44,23 +44,49 @@ console.log(countNodesAbove(tree, 10)); // -> 3 (10, 15, 12, 18)
  * Write a recursive function that calculates total size of all files in nested directories.
  * Files have size property, directories have contents array.
  */
+/* NOTES
+Problem: This only works if the contents array has no more than 2 elements. When I add a third, it reaches the base before going into the 3rd element
+*/
+function calculateTotalSize(directory, totalCount = 0) {
+  
+  // BASE?: if the object has a key of size, add it to totalCount 
+  if (directory.hasOwnProperty('size')) {
+    totalCount += directory.size;
+    console.log(totalCount);
+    return totalCount;
+  }
+  // if the object hasOwnProperty of contents AND if the first element/object of contents array has a key of size, add it to totalCount
+  else if (directory.hasOwnProperty('contents') && directory.contents[0].hasOwnProperty('size')) {
+    totalCount += directory.contents[0].size;
+    const newDirectory = directory.contents.slice(1)[0];
+    console.log(newDirectory);
+    return calculateTotalSize(newDirectory, totalCount);
+  }
+  // if the object hasOwnProperty of contents AND the first element/object hasOwnProperty of contents, recurse passing in the first element/object
+  else if (directory.hasOwnProperty('contents') && directory.contents[0].hasOwnProperty('contents')) {
+    const newDirectory = directory.contents.slice(1)[0];
+    return calculateTotalSize(newDirectory, totalCount);
+  } else {
+  console.log(totalCount);
+  return totalCount;
+  }
+}
 
-function calculateTotalSize(directory) {}
-
-// const fileSystem = {
-//   name: 'root',
-//   contents: [
-//     { name: 'file1.txt', size: 100 },
-//     {
-//       name: 'folder1',
-//       contents: [
-//         { name: 'file2.txt', size: 200 },
-//         { name: 'file3.txt', size: 150 }
-//       ]
-//     }
-//   ]
-// };
-// console.log(calculateTotalSize(fileSystem)); // -> 450
+const fileSystem = {
+  name: 'root',
+  contents: [
+    { name: 'file1.txt', size: 100 },
+    {
+      name: 'folder1',
+      contents: [
+        { name: 'file2.txt', size: 200 },
+        { name: 'file3.txt', size: 150 },
+        { name: 'file4.txt', size: 120}
+      ]
+    }
+  ]
+};
+console.log(calculateTotalSize(fileSystem)); // -> 450
 
 /**
  * Challenge 3: The Permutation Generator with Constraints

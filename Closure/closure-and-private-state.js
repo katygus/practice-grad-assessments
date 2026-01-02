@@ -7,6 +7,18 @@
 
 function createCounter() {
   // Your code here
+  let count = 0;
+   return {
+    increment: function() {
+      count++;
+    },
+    decrement: function() {
+      count--;
+    },
+    get: function() {
+      return count;
+    }
+  }
 }
 
 // const counter = createCounter();
@@ -16,6 +28,11 @@ function createCounter() {
 // console.log(counter.get()); // -> 2
 // counter.decrement();
 // console.log(counter.get()); // -> 1
+// const counter2 = createCounter();
+// counter2.increment();
+// counter2.increment();
+// counter2.increment();
+// console.log(counter2.get())
 
 /**
  * Challenge 2: The Password Validator
@@ -26,14 +43,34 @@ function createCounter() {
  */
 
 function createPasswordValidator(correctPassword) {
-  // Your code here
+// validate method takes in a string
+  let attempts = 0;
+  return {
+    validate: function(string) {
+      if (string === correctPassword) {
+        attempts++;
+        return true;
+      }
+      if (string !== correctPassword) {
+        attempts++;
+        return false;
+      }
+    },
+    getAttempts: function() {
+      return attempts;
+    }
+  }
 }
 
 // const validator = createPasswordValidator('secret123');
 // console.log(validator.validate('wrong')); // -> false
 // console.log(validator.validate('secret123')); // -> true
-// console.log(validator.getAttempts()); // -> 2
-
+// console.log(validator.getAttempts());// -> 2
+// const validator2 = createPasswordValidator('abc123'); 
+// console.log(validator2.validate('secret123'));
+// console.log(validator2.validate('321cba'));
+// console.log(validator2.validate('abc123'));
+// console.log(validator2.getAttempts());
 /**
  * Challenge 3: The Rate Limiter
  * 
@@ -42,7 +79,7 @@ function createPasswordValidator(correctPassword) {
  */
 
 function createRateLimiter(limit, intervalMs) {
-  // Your code here
+    
 }
 
 // const limiter = createRateLimiter(3, 1000); // 3 calls per second

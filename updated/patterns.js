@@ -4,9 +4,21 @@
 
 /**
  * Challenge 1: The Configuration Builder
+ * 
+ * You're building a tool to create settings for an app.
+ * Start with some default settings.
+ * Let the user change settings one by one.
+ * Chain the changes together: .setTimeout(5000).setRetries(3)
+ * When done, call .build() to get the final settings.
+ * If someone tries to set a timeout of -100, throw an error.
  */
 function createConfigBuilder(defaults) {
-  // Your code here
+   // Your code here
+  // Start with the defaults
+  // Return an object with methods like setTimeout, setRetries, etc.
+  // Each method should return the same object so you can chain them
+  // build() returns the final configuration
+  // Throw errors for impossible values (like negative timeouts)
 }
 
 // Tests for Challenge 1
@@ -39,9 +51,21 @@ function createConfigBuilder(defaults) {
 
 /**
  * Challenge 2: The Access Control Gatekeeper
+ * 
+ * You're building security for different types of users.
+ * You have rules: admins can do everything, users can only read.
+ * Create a gatekeeper that remembers these rules.
+ * When someone asks "Can user Bob delete this?", check the rules.
+ * If not allowed, throw an error.
+ * Each user gets their own "access checker" function.
  */
 function createGatekeeper(permissions) {
   // Your code here
+  // permissions = {admin: ['read','write','delete'], user: ['read']}
+  // Return an object with a method like forUser('admin')
+  // That method returns a function that checks if action is allowed
+  // Example: adminAccess('delete') → true, userAccess('delete') → error
+
 }
 
 // Tests for Challenge 2
@@ -78,10 +102,24 @@ function createGatekeeper(permissions) {
 
 /**
  * Challenge 3: The Validation Pipeline
+ * 
+ * You're checking if user data is valid before saving it.
+ * Create a pipeline of checks (like an assembly line).
+ * First check: has a name? Throw error if not.
+ * Second check: is 18 or older? Throw error if not.
+ * Third check: has valid email? Throw error if not.
+ * If any check fails, stop there and return the error.
+ * If all pass, return the valid data.
  */
 function createValidatorPipeline() {
   // Your code here
+  // Start with an empty list of validators
+  // Add validators one by one: .add(checkFunction)
+  // When validating data, run through validators in order
+  // First validator that throws an error → stop and return error
+  // All pass → return the data
 }
+  
 
 // Tests for Challenge 3
 // console.log("\n=== Challenge 3 Tests ===");
@@ -111,9 +149,20 @@ function createValidatorPipeline() {
 
 /**
  * Challenge 4: The Feature Flag System
+ * 
+ * Your app has new features that might be on or off.
+ * Some users get new features, some don't.
+ * Create a system that checks if a feature is on.
+ * If feature is on, use the new code.
+ * If feature is off, use the old code (or throw error).
+ * The system should remember which features are on/off.
  */
 function createFeatureFlags(flags) {
-  // Your code here
+ // Your code here
+  // flags = {newUI: true, analytics: false}
+  // Return an object with two methods:
+  // wrap('newUI', newCode, oldCode) → runs newCode if on, oldCode if off
+  // require('analytics', code) → runs code if on, throws error if off
 }
 
 // Tests for Challenge 4
@@ -153,10 +202,21 @@ function createFeatureFlags(flags) {
 
 /**
  * Challenge 5: The Memoized Calculator
+ * 
+ * Build a calculator that remembers answers it already computed.
+ * If you ask "5 + 3" twice, it should compute once, remember the answer.
+ * Different operations (add, multiply) have separate memories.
+ * Throw errors for impossible math (like dividing by zero).
  */
 function createMemoizedCalculator() {
-  // Your code here
-}
+// Your code here
+  // Remember past calculations in some storage
+  // When asked "add(5, 3)":
+  // 1. Check if we've done this exact calculation before
+  // 2. If yes, return remembered answer
+  // 3. If no, calculate, remember, then return
+  // Handle different operations: add, subtract, multiply, divide
+  // Throw errors for bad inputs}
 
 // Tests for Challenge 5
 // console.log("\n=== Challenge 5 Tests ===");
@@ -181,13 +241,29 @@ function createMemoizedCalculator() {
 
 /**
  * CHALLENGE SET 2: Nested Structure Traversal and Accumulation
+ * 
+ * These challenges are about:
+ * 1. Going through nested objects (objects inside objects)
+ * 2. Collecting information as you go
+ * 3. Making decisions based on what you find
  */
 
 /**
  * Challenge 6: The Inventory Aggregator
+ * 
+ * You have a warehouse with aisles, shelves, boxes, and items.
+ * Items have types ('widget', 'gadget') and counts (10, 5, etc.).
+ * Go through the entire warehouse and add up counts.
+ * Only count items that match a condition (like "type === 'widget'").
+ * Return the total count.
  */
 function aggregateInventory(warehouse, condition) {
   // Your code here
+  // warehouse = {aisles: [{shelves: [{boxes: [{items: [...]}]}]}]}
+  // Go through aisles → shelves → boxes → items
+  // For each item, check: condition(item) → true/false?
+  // If true, add item.count to total
+  // Return total
 }
 
 // Tests for Challenge 6
@@ -248,9 +324,20 @@ function aggregateInventory(warehouse, condition) {
 
 /**
  * Challenge 7: The Configuration Flattener
+ * 
+ * You have settings nested inside objects.
+ * Example: {server: {port: 3000, host: 'localhost'}}
+ * You want to flatten this to: {'server.port': 3000, 'server.host': 'localhost'}
+ * Go through all levels, use dots to show the path.
+ * Handle arrays too: cors: ['site1', 'site2'] becomes 'cors.0': 'site1', 'cors.1': 'site2'
  */
 function flattenWithPaths(config, prefix = '') {
   // Your code here
+  // Look at each key in the object
+  // If value is simple (number, string, boolean): save with path
+  // If value is array: add index numbers to path (cors.0, cors.1)
+  // If value is object: go deeper, add key to path
+  // Build new flat object as you go
 }
 
 // Tests for Challenge 7
@@ -284,9 +371,21 @@ function flattenWithPaths(config, prefix = '') {
 
 /**
  * Challenge 8: The Dependency Collector
+ * 
+ * You have software modules that depend on other modules.
+ * Module A needs B and C, B needs D, C needs nothing.
+ * List all modules needed, in the right order.
+ * Parents before children, but keep sibling order.
+ * No duplicates in final list.
  */
 function collectDependencies(moduleTree) {
   // Your code here
+  // Start with module itself
+  // Then for each dependency, list it
+  // Then for each of those, list their dependencies
+  // Keep track of what you've already listed
+  // Make sure parent comes before child
+  // Example: A → [B, C] → B needs D → Result: A, B, C, D
 }
 
 // Tests for Challenge 8
@@ -324,9 +423,21 @@ function collectDependencies(moduleTree) {
 
 /**
  * Challenge 9: The Permission Validator
+ * 
+ * You have resources (files, folders) with required permissions.
+ * Example: 'read_docs' permission needed for docs folder.
+ * User has list of permissions they have.
+ * Go through resources, check if user has permission at each level.
+ * If user has permission for folder, check contents too.
+ * Return list of resources user can access.
  */
 function findAccessibleResources(resourceTree, userPermissions, currentPath = []) {
-  // Your code here
+ // Your code here
+  // Check: does user have permission for this resource?
+  // If yes: add to list, then check children
+  // If no: skip this resource and all children
+  // Build list as you go
+  // Return array of resource names user can access
 }
 
 // Tests for Challenge 9
@@ -382,9 +493,20 @@ function findAccessibleResources(resourceTree, userPermissions, currentPath = []
 
 /**
  * Challenge 10: The Template Variable Extractor
+ * 
+ * You have email templates with placeholders like {{user.name}}.
+ * Templates can be strings or nested in objects.
+ * Go through everything, find all {{...}} patterns.
+ * Extract just the variable names (user.name, not the braces).
+ * Return unique variable names (no duplicates).
  */
 function extractTemplateVariables(templates) {
   // Your code here
+  // Look through object/array structure
+  // When you find a string, look for {{...}}
+  // Extract what's between the braces
+  // Add to collection if not already there
+  // Return array of unique variable names
 }
 
 // Tests for Challenge 10
@@ -426,22 +548,45 @@ function extractTemplateVariables(templates) {
 
 /**
  * CHALLENGE SET 3: Binary Search Trees
+ * 
+ * These challenges are about:
+ * 1. Adding values to a BST in the right place
+ * 2. Finding the deepest path (how far down the tree goes)
+ * 3. Adding extra features to a basic BST
  */
 
 /**
  * Challenge 11: The BST with Value Tracking
+ * 
+ * Basic BST: add values, smaller values go left, larger go right.
+ * ADD THESE FEATURES:
+ * 1. Track smallest and largest values in the tree
+ * 2. Count how many times each value appears (handle duplicates)
+ * 3. Find value closest to a given number (like closest to 13)
+ * 4. Find deepest path from root to leaf (how many steps down)
  */
+
 class EnhancedBST {
   constructor() {
     // Your code here
+    // Set up root node
+    // Track min, max, counts of values
   }
 
   add(value) {
-    // Your code here
+ // Your code here
+    // Start at root
+    // Compare: if value < current, go left; if >, go right; if =, handle duplicate
+    // Keep going until you find empty spot
+    // Update min/max if needed
+    // Count how many times you've seen this value
   }
 
   depth() {
     // Your code here
+    // Find longest path from root to any leaf
+    // Example: root → left → left → leaf = depth 3
+    // Empty tree: depth 0, single node: depth 1
   }
 
   getMin() {
@@ -484,6 +629,12 @@ class EnhancedBST {
 
 /**
  * Challenge 12: The Balanced BST Checker
+ * 
+ * BST where you check if tree is balanced.
+ * Balanced = left and right sides are about same depth (difference ≤ 1).
+ * add() should work normally.
+ * isBalanced() tells you if tree is balanced.
+ * depth() finds deepest path.
  */
 class BalancedBST {
   constructor() {
@@ -492,14 +643,22 @@ class BalancedBST {
 
   add(value) {
     // Your code here
+    // Add like normal BST
+
   }
 
   depth() {
     // Your code here
+    // Find deepest path
+
   }
 
   isBalanced() {
     // Your code here
+    // Check left subtree depth
+    // Check right subtree depth
+    // If difference > 1, return false
+    // Otherwise return true
   }
 }
 
@@ -528,7 +687,14 @@ class BalancedBST {
 
 /**
  * Challenge 13: The Range BST
+ * 
+ * BST that's good at answering "what values are between 5 and 12?"
+ * add() works normally.
+ * rangeSearch(min, max) returns all values between min and max.
+ * rangeCount(min, max) just counts how many values in that range.
+ * depth() finds deepest path.
  */
+
 class RangeBST {
   constructor() {
     // Your code here
@@ -544,10 +710,15 @@ class RangeBST {
 
   rangeSearch(min, max) {
     // Your code here
+    // Go through tree
+    // Collect values where: min ≤ value ≤ max
+    // Return array of those values
   }
 
   rangeCount(min, max) {
     // Your code here
+    // Same as rangeSearch but just count, don't collect values
+
   }
 }
 
@@ -575,14 +746,25 @@ class RangeBST {
 
 /**
  * Challenge 14: The BST with Path Tracking
+ * 
+ * BST that remembers the path taken to add each value.
+ * Example: add(10) → path [10]
+ * add(5) → path [10, 5] (start at 10, go left to 5)
+ * add(15) → path [10, 15] (start at 10, go right to 15)
+ * Also find deepest path in whole tree.
  */
 class PathTrackingBST {
   constructor() {
     // Your code here
+    // Remember all add paths somewhere
   }
 
   add(value) {
     // Your code here
+    // Start at root
+    // Record each step: [root, next, next, ...] until you add value
+    // Save this path
+    // Return the path
   }
 
   depth() {
@@ -591,10 +773,13 @@ class PathTrackingBST {
 
   getAddHistory() {
     // Your code here
+    // Return array of all paths recorded during adds
   }
 
   getDeepestPath() {
     // Your code here
+    // Find the longest path from root to any leaf
+    // This might be different from add paths!
   }
 }
 
@@ -626,9 +811,20 @@ class PathTrackingBST {
 
 /**
  * Challenge 15: The BST Validation Wrapper
+ * 
+ * Create a BST that checks values before adding them.
+ * Someone else gives you a validation function.
+ * Before adding any value, run it through validator.
+ * If validator throws error, don't add the value, throw the error.
+ * If validator says OK, add the value.
  */
 function createValidatedBST(validator) {
   // Your code here
+  // validator is a function that takes a value
+  // Returns true if value is OK, throws error if not
+  // Wrap the BST so every add() checks validator first
+  // If validator throws, don't add, re-throw the error
+  // If validator says OK, add to BST normally
 }
 
 // Tests for Challenge 15
@@ -664,7 +860,14 @@ function createValidatedBST(validator) {
 
 /**
  * Challenge 16: The BST Serializer
+ * 
+ * BST that can save itself to an array and load from array.
+ * serialize() → convert tree to array that keeps the structure.
+ * deserialize(array) → build tree from array.
+ * The array should let you rebuild exact same tree.
+ * depth() should work normally.
  */
+
 class SerializableBST {
   constructor() {
     // Your code here
@@ -680,10 +883,17 @@ class SerializableBST {
 
   serialize() {
     // Your code here
+    // Convert tree to array
+    // Common way: level by level, use null for empty spots
+    // Example: [8, 3, 10, 1, 6, null, 14] for tree with root 8, left 3, right 10, etc.
   }
 
   static deserialize(array) {
     // Your code here
+    // Build tree from array
+    // First element is root
+    // For element at index i: left child at 2i+1, right at 2i+2
+    // null means no child there
   }
 }
 
